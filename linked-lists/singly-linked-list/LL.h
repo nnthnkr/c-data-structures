@@ -24,6 +24,7 @@ void freeNode(Node *node);
 // (singly) Linked List Functions
 // Helpers
 void displayLL(LL *ll);
+void reverseDisplayLL(LL *ll);
 bool isEmpty(LL *ll);
 bool initLL(LL** ll);
 bool clearLL(LL* ll);
@@ -35,8 +36,10 @@ bool insertAtEnd(LL* ll, int data);
 int deleteHead(LL* ll);
 int deleteTail(LL* ll);
 bool deleteEdgeCases(LL* ll, int *returnVal);
-// Clear
-bool clearLL(LL* ll);
 // Search
 int search(LL* ll, int elem);
+
+// Clear & Delete
+bool clearLL(LL* ll);
+bool deleteLL(LL* ll);
 #endif

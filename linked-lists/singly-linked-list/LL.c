@@ -41,6 +41,44 @@ void displayLL(LL *ll) {
     printf("\n");
 }
 
+void reverseDisplayLL(LL* ll) {
+    if (isEmpty(ll)) {
+        fprintf(stderr, "[Error]: Linked List Empty.\n");
+        fprintf(stderr, "[Error]: Cannot display reversed array.\n");
+        return;
+    }
+    
+    // temporary array to store data elements.
+    int *elements = (int *) calloc(ll->length, sizeof(int));         // C99 (and beyond) compilers implicitly cast (void          
+    if (elements == NULL) {                                          // ) to its appropriate type in assignment. 
+        fprintf(stderr, "[Error]: Auxiliary array allocation failed.\n");
+        fprintf(stderr, "[Error]: Linked list is too lengthy or failure of calloc.\n");
+        fprintf(stderr, "[Error]: Aborting ...");
+        return;
+    }
+                                                                     
+    Node *tmp = ll->head;
+    int i = 0;
+    while (tmp != NULL) {
+        elements[i] = tmp->data;
+        tmp = tmp->next;
+        i++;
+    }
+    // i here would be length + 1. decrement it by 1
+    i--;
+
+    while (i >= 0) {
+        printf("%d", elements[i]);
+        if (i != 0)
+            printf(" ");
+        i--;
+    }
+    printf("\n");
+    
+    // clean up the memory
+    free(elements);
+}
+
 bool isEmpty(LL *ll) {
     if (ll->head == NULL)
         return true;
@@ -62,7 +100,7 @@ bool initLL(LL** ll) {
     (*ll)->tail = NULL;
     (*ll)->length = 0;                          // this can be used to check whether LL is empty
 
-    fprintf(stdout, "Singly Linked List Initialized!!\n");
+    fprintf(stdout, "[Info]: Singly Linked List Initialized!!\n");
     return true;
 }
 
@@ -178,10 +216,6 @@ int deleteTail(LL* ll) {
 
 // clear the linked list (basically free all the nodes)
 bool clearLL(LL* ll) {
-    // empty ll check
-    if (isEmpty(ll))
-        return false;
-
     Node *currentNode = ll->head, *prevNode;
     
     while (currentNode != NULL) {
@@ -193,6 +227,21 @@ bool clearLL(LL* ll) {
     ll->head = NULL;
     ll->tail = NULL;
     ll->length = 0;
+    return true;
+}
+
+// "delete" the LL.
+bool deleteLL(LL* ll) {
+    if (! isEmpty(ll) && ! clearLL(ll)) {
+        fprintf(stderr, "[Error]: Error while freeing all nodes.\n");
+        fprintf(stderr, "[Info]: Close the program to free leaked memory.\n");
+        return false;
+    }
+    // free the memory occupied by ll ptr itself.
+    free(ll);
+    
+    fprintf(stdout, "[Info]: Linked List cleared from memory successfully.\n");
+
     return true;
 }
 

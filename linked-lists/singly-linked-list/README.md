@@ -9,12 +9,12 @@
 - [x] Delete the last node of a linked list.
 - [x] Search for a value in a linked list.
 - [x] Clear entire linked list.
-- [ ] Display the list in reverse order.
+- [x] Display the list in reverse order.
 
 ### Medium Questions
 - [ ] Insert a node in a sorted linked list.
 - [ ] Find the middle of the linked list.
-- [ ] Get the nth node from the end.
+- [x] Get the nth node from the end.
 - [ ] Reverse a linked list.
 - [ ] Remove duplicates from a sorted linked list.
 - [ ] Implement a stack or queue using a linked list.
