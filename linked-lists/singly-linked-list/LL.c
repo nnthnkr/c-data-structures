@@ -249,12 +249,47 @@ bool deleteLL(LL* ll) {
 //  returns position (1-based) of element in the LL
 int search(LL *ll, int elem) {
     Node *tmp = ll->head;
-    int pos = 0;
+    int pos = 1;
     while (tmp != NULL) {
         if (tmp->data == elem)
-            return pos + 1;
+            return pos;
         tmp = tmp->next;
         pos++;
     }
     return -1;
+}
+
+// reverse
+bool reverseLL(LL* ll) {
+    // check if empty 
+    if (isEmpty(ll)) {
+        fprintf(stderr, "[Error] Cannot reverse an empty linked list.\n");
+        return false;
+    }
+    // no need to reverse a ll with just one node
+    if (ll->length == 1) {
+        return true;
+    }
+
+    Node *prev = NULL, *cur = ll->head, *next = ll->head->next;
+    ll->tail = ll->head;
+    
+    while (next != NULL) {
+        cur->next = prev;
+        prev = cur;
+        cur = next;
+        next = next->next;
+    }
+    
+    // after the above loop completes. (nth -> last)
+    //  prev -> (n-1)th node
+    //  cur -> nth last node
+    //  next -> null
+    // So, we have to do one final ptr change so cur correctly points to prev;
+    cur->next = prev;
+    
+    ll->tail = ll->head;
+    ll->head = cur;
+
+    return true;        // assuming everything went perfectly
 }

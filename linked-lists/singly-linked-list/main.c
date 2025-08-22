@@ -7,6 +7,7 @@
 #endif
 
 int main(void) {
+    /*
     LL* l;
     initLL(&l);
     insertAtEnd(l, 25);
@@ -15,6 +16,9 @@ int main(void) {
     insertAtEnd(l, 38);
     insertAtEnd(l, 59);
     insertAtEnd(l, 14);
+    displayLL(l);
+    
+    reverseLL(l);
     displayLL(l);
     
 #if defined(medium_q)
@@ -32,5 +36,7 @@ int main(void) {
 #endif
 
     deleteLL(l);
+    deleteLL(l2);
+    */
     return 0;
 }
