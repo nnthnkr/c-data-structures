@@ -23,7 +23,23 @@ Node* getNthNode(LL *ll, int n) {
     
     // not checking for tmp == NULL 
     // assuming its guaranteed that tmp will NEVER be NULL if tmp != tail->next;
-    while (curPos++ < n)  tmp = tmp->next; 
+    while (tmp != NULL && curPos++ < n)  tmp = tmp->next; 
 
     return tmp;
+}
+
+Node* getMiddleNode(LL* ll) {
+    // empty check
+    if (isEmpty(ll)) {
+        fprintf(stderr, "[Error]: Empty List.\n");
+        fprintf(stderr, "[Info]: Try again with a non-empty list.\n");
+        return ll->head;
+    }
+    
+    int middleNodeIdx = ll->length / 2;         // I should really be using uint but... anyways, output is floor(len/2);
+    int curPos = 1;
+    Node *tmp = ll->head;
+    while (tmp != NULL && curPos++ < middleNodeIdx) tmp = tmp->next;
+
+    return tmp; 
 }

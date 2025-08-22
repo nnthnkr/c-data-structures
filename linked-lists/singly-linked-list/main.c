@@ -23,7 +23,14 @@ int main(void) {
     printf("Node[addr]: %p\n"
            "Node[data]: %d\n",
            tmp, tmp->data);
+
+    tmp = getMiddleNode(l);
+    
+    printf("Middle Node[addr]: %p\n"
+           "Middle Node[data]: %d\n",
+           tmp, tmp->data);
 #endif
+
     deleteLL(l);
     return 0;
 }

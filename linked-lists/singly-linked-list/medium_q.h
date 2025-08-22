@@ -8,4 +8,7 @@
 //  This would be more convenient in a doubly linked list.
 Node* getNthNode(LL *ll, int n);
 
+// Get middle node of the ll
+Node* getMiddleNode(LL* ll);
+
 #endif

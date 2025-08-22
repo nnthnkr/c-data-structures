@@ -13,7 +13,7 @@
 
 ### Medium Questions
 - [ ] Insert a node in a sorted linked list.
-- [ ] Find the middle of the linked list.
+- [x] Find the middle of the linked list.
 - [x] Get the nth node from the end.
 - [ ] Reverse a linked list.
 - [ ] Remove duplicates from a sorted linked list.
