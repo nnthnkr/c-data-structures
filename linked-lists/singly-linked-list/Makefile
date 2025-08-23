@@ -9,6 +9,7 @@ SRCS = LL.c main.c
 # include flags
 ifeq ($(MEDIUM_Q), 1)
 	SRCS += medium_q.c
+	SRCS += stack.c
 	CXX_FLAGS += -Dmedium_q
 endif
 

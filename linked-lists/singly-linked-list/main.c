@@ -38,5 +38,7 @@ int main(void) {
     deleteLL(l);
     deleteLL(l2);
     */
+
+    stack_impl();
     return 0;
 }

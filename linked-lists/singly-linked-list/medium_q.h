@@ -11,4 +11,7 @@ Node* getNthNode(LL *ll, int n);
 // Get middle node of the ll
 Node* getMiddleNode(LL* ll);
 
+// basic stack implementation using singly linked list showcase
+void stack_impl();
+
 #endif

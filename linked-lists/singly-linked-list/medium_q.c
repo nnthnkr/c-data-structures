@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "LL.h"
 #include "medium_q.h"
+#include "stack.h"
 
 Node* getNthNode(LL *ll, int n) { 
     // if either of below two checks pass, we return the head ptr
@@ -42,4 +43,29 @@ Node* getMiddleNode(LL* ll) {
     while (tmp != NULL && curPos++ < middleNodeIdx) tmp = tmp->next;
 
     return tmp; 
+}
+
+// basic stack implementation
+void stack_impl() {
+    Stack* s;
+    stck_init(&s);
+    stck_push(s, 25);
+    stck_push(s, 29);
+    stck_push(s, 58);
+    stck_push(s, 69);
+    stck_push(s, 42);
+    stck_push(s, 37);
+    stck_display(s);
+    printf("Top of stack: %d\n", stck_peep(s));
+    printf("Pop: %d\n", stck_pop(s));
+    printf("Pop: %d\n", stck_pop(s));
+    printf("Pop: %d\n", stck_pop(s));
+    printf("Pop: %d\n", stck_pop(s));
+    printf("Pop: %d\n", stck_pop(s));
+    printf("Pop: %d\n", stck_pop(s)); 
+    printf("Pop: %d\n", stck_pop(s));
+    stck_display(s);
+    printf("Top of stack: %d\n", stck_peep(s));
+    printf("stack empty: %d\n", stck_empty(s));
+    stck_clear(s);
 }

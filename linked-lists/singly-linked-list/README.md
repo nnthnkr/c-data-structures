@@ -15,9 +15,9 @@
 - [ ] Insert a node in a sorted linked list.
 - [x] Find the middle of the linked list.
 - [x] Get the nth node from the end.
-- [ ] Reverse a linked list.
+- [x] Reverse a linked list.
 - [ ] Remove duplicates from a sorted linked list.
-- [ ] Implement a stack or queue using a linked list.
+- [x] Implement a stack using a singly linked list.
 
 ### Difficult Questions
 - [ ] Detect a loop/cycle in a linked list.
