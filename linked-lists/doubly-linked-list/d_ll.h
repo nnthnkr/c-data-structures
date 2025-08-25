@@ -1,5 +1,5 @@
-#ifndef D_LL            // doubly linked list
-#define D_LL
+#ifndef D_LL_H
+#define D_LL_H
 
 #include <stdbool.h>
 
@@ -34,7 +34,7 @@ bool dll_init(D_LL **dll);                          // initialize a doubly linke
 // insert
 bool dll_insert_head(D_LL *dll, int data);
 bool dll_insert_tail(D_LL *dll, int data);
-bool dll_insert(D_LL *dll, uint pos, int data);j
+bool dll_insert(D_LL *dll, uint pos, int data);
 bool _dll_insert_to_empty(D_LL *dll, int data);   // for internal use only
 bool _dll_insert_intermediate(D_LL *dll, int data);
 
@@ -42,6 +42,7 @@ bool _dll_insert_intermediate(D_LL *dll, int data);
 bool dll_update(D_LL *dll, uint pos, int data);
 
 // delete
+int _dll_delete_edge_cases(D_LL *dll);
 bool dll_delete_head(D_LL *dll);
 bool dll_delete_tail(D_LL *dll);
 bool dll_delete_intermediate(D_LL *dll, uint pos);
@@ -58,6 +59,9 @@ void dll_display_reverse(D_LL *dll);
 bool dll_clear(D_LL *dll);
 
 // useful
-bool empty(D_LL *dll);
+bool dll_empty(D_LL *dll);
+uint dll_length(D_LL *dll);
 
+// misc
+bool dll_reverse(D_LL *dll);
 #endif
