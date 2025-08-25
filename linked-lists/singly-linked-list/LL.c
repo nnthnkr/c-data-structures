@@ -272,7 +272,6 @@ bool reverseLL(LL* ll) {
     }
 
     Node *prev = NULL, *cur = ll->head, *next = ll->head->next;
-    ll->tail = ll->head;
     
     while (next != NULL) {
         cur->next = prev;
