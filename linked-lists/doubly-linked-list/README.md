@@ -6,7 +6,7 @@ a prev pointer and so can perform traversal, search, delete and other operations
 ## problems to solve
 ```text
 - [x] Write a C function to define the structure for a doubly linked list node and initialize an empty list.
-- [ ] Implement a function to insert a node at the beginning of a doubly linked list.
+- [x] Implement a function to insert a node at the beginning of a doubly linked list.
 - [x] Write a program to insert a node at the end of a doubly linked list.
 - Implement insertion of a node at a specified position in a doubly linked list.
 - [x] Implement deletion of the first node in a doubly linked list.

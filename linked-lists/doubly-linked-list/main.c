@@ -41,6 +41,24 @@ int main(void) {
     dll_delete_head(dll);
     dll_delete_head(dll);
 
+    dll_insert_head(dll, 25);
+    dll_insert_head(dll, 29);
+    dll_insert_head(dll, 42);
+    dll_insert_head(dll, 37);
+    dll_insert_head(dll, 144);
+    
+    dll_display(dll);
+    dll_reverse(dll);
+    dll_display(dll);
+
+
+    dll_delete_head(dll);
+    dll_delete_head(dll);
+    dll_delete_head(dll);
+    dll_delete_head(dll);
+    dll_delete_head(dll);
+    dll_delete_head(dll);
+    
     free(dll);
     return 0;
 }

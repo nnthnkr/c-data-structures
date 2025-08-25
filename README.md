@@ -5,9 +5,8 @@ university's Data Structures course.
 
 #### Implemented Till Now
 - [x] Singly Linked List
-- [ ] Doubly Linked List
-- [ ] Stack
+- [x] Doubly Linked List
+- [x] Stack
 - [ ] Queue
 - [ ] Binary Search Trees
-- [ ] Self-Balancing Trees
-- [ ] etc.
+- [ ] Self-Balancing Trees 

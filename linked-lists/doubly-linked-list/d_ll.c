@@ -42,6 +42,26 @@ bool dll_init(D_LL **dll) {
 }
 
 // insert
+bool dll_insert_head(D_LL *dll, int data) {
+    // if the dll is initially empty, call _dll_insert_to_empty func
+    if (dll_empty(dll)) {
+        return _dll_insert_to_empty(dll, data);
+    }
+    
+    Node *node = createNode(data);
+    if (node == NULL) { return false; }
+
+    node->next = dll->head;
+    dll->head->prev = node;
+    dll->head = node;
+    dll->length += 1U;
+    
+    fprintf(stdout, 
+            "[INFO]: Successfully inserted node (%p) as the new head.\n", 
+            node);
+
+    return true;
+}
 bool dll_insert_tail(D_LL *dll, int data) {
     // if the dll is initially empty, call _dll_insert_to_empty func
     if (dll_empty(dll)) {
@@ -54,7 +74,7 @@ bool dll_insert_tail(D_LL *dll, int data) {
     dll->tail->next = node;
     node->prev = dll->tail;
     dll->tail = dll->tail->next;
-    dll->length += 1;
+    dll->length += 1U;
 
     fprintf(stdout, 
             "[INFO]: Successfully inserted node (%p) as the new tail.\n", 
@@ -127,7 +147,7 @@ bool dll_delete_head(D_LL *dll) {
     // dll has more than one element
     fprintf(stdout,
             "[INFO]: Deleting node (%p)\n",
-            dll->head->next);
+            dll->head);
     dll->head       = dll->head->next;      // make dll->head point to the immediate next node of head
     free(dll->head->prev);                  // free the last node head was pointing to
     dll->head->prev = NULL;                 // make current head's prev pointer point to NULL
@@ -146,10 +166,17 @@ bool dll_delete_tail(D_LL *dll) {
     if (status == 0)
         return true;
     
+    fprintf(stdout,
+            "[INFO]: Deleting node (%p)\n",
+            dll->tail);
     dll->tail       = dll->tail->prev;  
     free(dll->tail->next);              
     dll->tail->next = NULL;             
     dll->length    -= 1U;
+    fprintf(stdout,
+            "[INFO]: Deleted successfully\n");
+
+    return true;
 }
 
 // display
