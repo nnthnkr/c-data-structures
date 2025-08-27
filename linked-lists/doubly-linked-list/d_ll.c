@@ -8,7 +8,8 @@ Node* createNode(int data) {
     Node *tmp = (Node *) malloc(sizeof(Node));
 
     if (tmp == NULL) {
-        fprintf(stderr, "[ERROR]: Memory allocation failure.\n"
+        fprintf(stderr, 
+                "[ERROR]: Memory allocation failure.\n"
                 "[ERROR]: Node creation failed.\n"
                 "[INFO]: NULL returned.\n");
         return NULL;
@@ -42,6 +43,34 @@ bool dll_init(D_LL **dll) {
 }
 
 // insert
+bool dll_insert(D_LL *dll, uint pos, int data) {
+    // NOTE: 0 is reserved to represent the last element
+    // -1 would've made more sense but pos is declared to be an unsigned int
+    //
+    // TODO: Come up with some other less terrible alternative
+    // UPDATE: I'll allow both 0 and dll->length to represent the tail.
+
+    // bounds checking (negatives not possible since they'd be converted to unsigned upper bound which is positive
+    if (pos > dll->length) {
+        fprintf(stderr,
+                "[ERROR]: Invalid bounds provided\n"
+                "[ERROR]: No insertition done\n"
+                "[INFO]: Valid bounds are [%u, %u]\n",
+                0, dll->length);
+        return false;
+    } 
+
+    if (pos == 1) {
+        return dll_insert_head(dll, data);
+    }
+
+    if (pos == 0 || pos == dll->length) {
+        return dll_insert_tail(dll, data);
+    }
+
+    return _dll_insert_intermediate(dll, pos, data);
+}
+
 bool dll_insert_head(D_LL *dll, int data) {
     // if the dll is initially empty, call _dll_insert_to_empty func
     if (dll_empty(dll)) {
@@ -90,7 +119,7 @@ bool _dll_insert_to_empty(D_LL *dll, int data) {
 
     dll->head = node;
     dll->tail = node;
-    dll->length += 1;
+    dll->length += 1U;
     
     fprintf(stdout, 
             "[INFO]: Successfully created node (%p)\n"
@@ -99,41 +128,115 @@ bool _dll_insert_to_empty(D_LL *dll, int data) {
 
     return true;
 }
-// delete
-int _dll_delete_edge_cases(D_LL *dll) {
-    /*
-     * return value meanings
-     *  -1 : d-Linked List was empty
-     *  0  : d-Linked List had only one element and it was deleted successfully.
-     *  1  : d-Linked List has more than one element
-     * */
-    // case 1: d-Linked List is empty
-    if (dll_empty(dll)) {
+
+bool _dll_insert_intermediate(D_LL *dll, uint pos, int data) {
+    // stop right before pos and insert the new node as the next to current node
+    Node *node = createNode(data);
+    if (node == NULL) { return false; } 
+
+    uint cur = 1;
+    Node *tmp = dll->head;
+    while (tmp != NULL) {
+        if (cur == pos - 1)
+            break;
+        tmp = tmp->next;
+        cur++;
+    }
+
+    node->next = tmp->next;
+    node->prev = tmp;
+
+    tmp->next       = node;
+    tmp->next->prev = node;
+    
+    dll->length += 1U;
+    
+    fprintf(stdout,
+            "[INFO]: Successfully created node (%p)" 
+            "and inserted at position %u\n",
+            node, pos);
+
+    return true;
+}
+
+// update
+bool dll_update(D_LL *dll, uint pos, int data) {
+    // bounds checking
+    if (pos > dll->length) {    
         fprintf(stderr,
-                "[ERROR]: d-Linked List is empty\n"
-                "[ERROR]: Cannot perform delete operation\n");
-        return -1;
+                "[ERROR]: Invalid bounds provided\n"
+                "[ERROR]: No updation done\n"
+                "[INFO]: Valid bounds are [%u, %u]\n",
+                0, dll->length);
+        return false;
+    }
+    
+    if (pos == 1) {
+        return dll_update_head(dll, data);
+    }
+    if (pos == 0) {
+        return dll_update_tail(dll, data);
     }
 
-    // case 2: d-Linked List has only one element
-    if (dll_length(dll) == 1) {
-        // store address of node inside a temporary variable
-        Node *tmp = dll->head;
-        // set dll params to default values (NULL and 0)
-        dll->head = NULL;
-        dll->tail = NULL;
-        dll->length = 0U;
-        // free the node 
-        fprintf(stdout, 
-                "[INFO]: Deleting node (%p)\n",
-                tmp);
-        free(tmp);
-        fprintf(stdout,
-                "[INFO]: Deleted successfully\n");
-        return 0;
+    return _dll_update_intermediate(dll, pos, data);
+}
+
+bool dll_update_head(D_LL *dll, int data) {
+    if (dll_empty(dll)) {
+        return dll_insert_head(dll, data);
     }
 
-    return 1;
+    dll->head->data = data;
+    return true;
+}
+
+bool dll_update_tail(D_LL *dll, int data) {
+    if (dll_empty(dll)) {
+        return dll_insert_tail(dll, data);
+    }
+
+    dll->tail->data = data;
+    return true;
+}
+
+bool _dll_update_intermediate(D_LL *dll, uint pos, int data) {
+    uint cur = 1;
+    Node *tmp = dll->head;
+    
+    while (cur < pos) {
+        tmp = tmp->next;
+        cur++;
+    }
+    
+    // when above loop ends tmp will be pointing to the pos'th node
+    tmp->data = data;
+
+    return true;        // redundant?
+}
+
+// delete
+bool dll_delete(D_LL *dll, uint pos) {
+    // NOTE: Same as dll_insert()
+
+    // bounds checking (negatives not possible since they'd be converted to unsigned upper bound which is positive
+    if (pos > dll->length) {
+        fprintf(stderr,
+                "[ERROR]: Invalid bounds provided\n"
+                "[ERROR]: No deletion done\n"
+                "[INFO]: Valid bounds are [%u, %u]\n",
+                0, dll->length);
+        return false;
+    } 
+
+    if (pos == 1) {
+        return dll_delete_head(dll);
+    }
+
+    if (pos == 0 || pos == dll->length) {
+        return dll_delete_tail(dll);
+    }
+
+    return _dll_delete_intermediate(dll, pos);
 }
 
 bool dll_delete_head(D_LL *dll) {
@@ -179,6 +282,71 @@ bool dll_delete_tail(D_LL *dll) {
     return true;
 }
 
+int _dll_delete_edge_cases(D_LL *dll) {
+    /*
+     * return value meanings
+     *  -1 : d-Linked List was empty
+     *  0  : d-Linked List had only one element and it was deleted successfully.
+     *  1  : d-Linked List has more than one element
+     * */
+    // case 1: d-Linked List is empty
+    if (dll_empty(dll)) {
+        fprintf(stderr,
+                "[ERROR]: d-Linked List is empty\n"
+                "[ERROR]: Cannot perform delete operation\n");
+        return -1;
+    }
+
+    // case 2: d-Linked List has only one element
+    if (dll_length(dll) == 1) {
+        // store address of node inside a temporary variable
+        Node *tmp = dll->head;
+        // set dll params to default values (NULL and 0)
+        dll->head = NULL;
+        dll->tail = NULL;
+        dll->length = 0U;
+        // free the node 
+        fprintf(stdout, 
+                "[INFO]: Deleting node (%p)\n",
+                tmp);
+        free(tmp);
+        fprintf(stdout,
+                "[INFO]: Deleted successfully\n");
+        return 0;
+    }
+
+    return 1;
+}
+
+bool _dll_delete_intermediate(D_LL *dll, uint pos) {
+    uint cur = 1;
+    Node *tmp = dll->head, *tmp2 = NULL;
+    while (tmp != NULL) {
+        if (cur == pos - 1)
+            break;
+        tmp = tmp->next;
+        cur++;
+    }
+     
+    tmp2 = tmp->next;
+    tmp->next = tmp->next->next;
+    tmp->next->prev = tmp;
+    
+    // should I decrease the length after deleting or before deleting?
+    // for now I am doing it after deleting
+    
+    fprintf(stdout,
+            "[INFO]: Deleting node (%p) from position %u\n",
+            tmp2, pos);
+    free(tmp2);
+    dll->length -= 1U;
+    
+    fprintf(stdout,
+            "[INFO]: Successfully deleted node\n");
+
+    return true;
+}
+
 // display
 void dll_display(D_LL *dll) {
     Node *tmp = dll->head;
@@ -205,7 +373,57 @@ void dll_display_reverse(D_LL *dll) {
 
     fprintf(stdout, "\n");
 }
+
+// search
+uint dll_search(D_LL *dll, int data) {
+    if (dll_empty(dll)) {
+        fprintf(stderr,
+                "[ERROR]: Empty d-Linked List provided\n"
+                "[ERROR]: No search performed\n");
+        return false;
+    }
+
+    Node *tmp = dll->head;
+    uint cur = 1;
+
+    while (tmp != NULL) {
+        if (tmp->data == data) {
+            return cur;
+        }
+        tmp = tmp->next;
+        cur++;
+    }
+
+    // since position of an element can't be greater than the length of the d-Linked
+    // List, length + 1 implies failure
+    return dll->length + 1;         
+}
+
 // clear
+bool dll_clear(D_LL *dll) {
+    if (dll == NULL) {
+        fprintf(stderr,
+                "[ERROR]: Pointer to null provided\n"
+                "[ERROR]: Clear opertion couldn't be performed\n");
+        return false;
+    }
+
+    if (dll_empty(dll)) {
+        free(dll);
+        return true;
+    }
+
+    while (!dll_empty(dll)) {
+        if (!dll_delete_head(dll)) {
+            // some error occurred here
+            return false;
+        }
+    }
+
+    free(dll);
+    return true;
+}
+
 
 // useful funcs
 bool dll_empty(D_LL *dll) {
