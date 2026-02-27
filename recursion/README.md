@@ -5,7 +5,7 @@ This folder mainly has solutions to below listed practice questions from a book.
 NOTE: RF means Recursive Function.
 
 ### Questions
-1. RF to input and add n numbers.
+1. RF to input and add n numbers. ([solution](./solutions/q1.c))
 2. RF to enter a line of text and display it in reverse order without storing the text in an array.
 3. RF to count all prime numbers between two positive integers `a` and `b` (inclusive).
 4. RF to display all _proper divisors_ of a number and display their sum.
