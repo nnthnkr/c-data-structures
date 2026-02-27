@@ -7,7 +7,7 @@ NOTE: RF means Recursive Function.
 ### Questions
 1. RF to input and add n numbers. ([solution](./solutions/q1.c))
 2. RF to enter a line of text and display it in reverse order without storing the text in an array. ([solution](./solutions/q2.c))
-3. RF to count all prime numbers between two positive integers `a` and `b` (inclusive).
+3. RF to count all prime numbers between two positive integers `a` and `b` (inclusive). ([solution](./solutions/q3.c))
 4. RF to display all _proper divisors_ of a number and display their sum.
    A proper divisor of `n` is a positive divisor of `n` and is not equal to `n`.
 5. RF to check whether a number is perfect or not.
